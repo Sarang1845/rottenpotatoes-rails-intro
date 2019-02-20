@@ -1,8 +1,7 @@
 class Movie < ActiveRecord::Base
     
-    @@all_ratings = ['G','PG','PG-13','R']
-
-	def self.get_ratings
-		@@all_ratings
-	end
+    @@possible_ratings = ['G','PG','PG-13','R']
+    def self.allratings
+        return @@possible_ratings
+    end
 end

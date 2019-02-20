@@ -1,50 +1,3 @@
-#class MoviesController < ApplicationController
-#
-#  def movie_params
-#    params.require(:movie).permit(:title, :rating, :description, :release_date)
-#  end
-
-#  def show
-#    id = params[:id] # retrieve movie ID from URI route
-#    @movie = Movie.find(id) # look up movie by unique ID
-#    # will render app/views/movies/show.<extension> by default
-#  end
-#
-#  def index
-#    @movies = Movie.all
-#  end
-#
-#  def new
-#    # default: render 'new' template
-#  end
-#
-#  def create
-#    @movie = Movie.create!(movie_params)
-#    flash[:notice] = "#{@movie.title} was successfully created."
-#    redirect_to movies_path
-#  end
-#
-#  def edit
-#    @movie = Movie.find params[:id]
-#  end
-#
-#  def update
-#    @movie = Movie.find params[:id]
-#    @movie.update_attributes!(movie_params)
-#    flash[:notice] = "#{@movie.title} was successfully updated."
-#    redirect_to movie_path(@movie)
-#  end
-#
-#  def destroy
-#    @movie = Movie.find(params[:id])
-#    @movie.destroy
-#    flash[:notice] = "Movie '#{@movie.title}' deleted."
-#    redirect_to movies_path
-#  end
-#
-#end
-
-
 class MoviesController < ApplicationController
 
   def movie_params
@@ -58,17 +11,27 @@ class MoviesController < ApplicationController
   end
 
   def index
-  #  @movies = Movie.all
-    @flag = 0
-    if params[:sort_using] == "title"
-		  @movies = Movie.order(:title)
-		  @flag = 1
-		elsif params[:sort_using] == "release_date"
-		  @movies = Movie.order(:release_date)
-		  @flag = 2
-		else
-		  @movies = Movie.all
-	  end
+    @movies = Movie.all
+    @all_ratings = Movie.allratings
+    if params[:ratings].present?
+      temp = params[:ratings]
+      @checked = temp.keys
+      if @checked.present?
+        @movies = Movie.all.where(rating: @checked)
+        
+      else
+        @movies = Movie.all
+      end
+    end
+    if params[:sort_using] == 'title'
+      @movies = @movies.order(:title)
+      @flag1 = 'hilite'
+    elsif params[:sort_using] == 'release_date'
+      @movies = @movies.order(:release_date)
+      @flag2 = 'hilite'
+    else  
+      @movies = @movies.all
+    end
   end
 
   def new
