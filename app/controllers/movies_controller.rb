@@ -47,8 +47,8 @@ class MoviesController < ApplicationController
       params[:ratings] = session[:ratings] #assign stored filter settings to current settings
     end
     if @flag3 && @flag4 # If incoming URI is lacking the right params[] and you're forced to fill them in from the session[], the RESTful thing to do is to redirect_to the new URI containing the appropriate parameters
-      flash.keep # since the flash[] only survives across a single redirect
-      redirect_to movies_path(params) and return
+      #flash.keep # since the flash[] only survives across a single redirect
+      #redirect_to movies_path(params) and return
     end
     if session[:ratings].present?
       @checked = session[:ratings].keys
