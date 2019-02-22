@@ -46,7 +46,7 @@ class MoviesController < ApplicationController
     else
       #@flag4 = 1 #assign flag value if no sorting paramenters present
       params[:ratings] = session[:ratings] #assign stored filter settings to current settings
-      redirect_to movies_path(params)
+      redirect_to movies_path(params) and return
     end
     #if @flag3 && @flag4 # If incoming URI is lacking the right params[] and you're forced to fill them in from the session[], the RESTful thing to do is to redirect_to the new URI containing the appropriate parameters
       #flash.keep # since the flash[] only survives across a single redirect
